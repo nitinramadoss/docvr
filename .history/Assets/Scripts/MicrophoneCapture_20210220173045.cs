@@ -13,7 +13,7 @@ using UnityEditor;
 
 public class MicrophoneCapture : MonoBehaviour
 {
-    GameObject doctor;
+    //GameObject gameObject;
 
 	//A boolean that flags whether there's a connected microphone
 	private bool micConnected = false;
@@ -38,7 +38,7 @@ public class MicrophoneCapture : MonoBehaviour
 	//Use this for initialization
 	void Start()
 	{
-        doctor = GameObject.Find("Ch16_nonPBR@Standing Idle");
+
         //Check if there is at least one microphone connected
 
         if (Microphone.devices.Length <= 0)
@@ -75,10 +75,8 @@ void OnGUI()
         //If the audio from any microphone isn't being captured
         if (!Microphone.IsRecording(null))
         {
-
-
             //Case the 'Record' button gets pressed
-            if (Input.GetKey(KeyCode.Space))
+            if (GUI.Button(new Rect(Screen.width / 4 - 100, Screen.height / 4 - 25, 200, 50), "Record"))
             {
                 //Start recording and store the audio captured from the microphone at the AudioClip in the AudioSource
                 //goAudioSource.clip = Microphone.Start(null, true, 20, maxFreq);
@@ -91,7 +89,7 @@ void OnGUI()
         else //Recording is in progress
         {
             //Case the 'Stop and Play' button gets pressed
-            if (!Input.GetKey(KeyCode.Space))
+            if (GUI.Button(new Rect(Screen.width / 4 - 100, Screen.height / 4 - 25, 200, 50), "Stop and Play!"))
             {
                 //Microphone.End(null); //Stop the audio recording
                 //goAudioSource.Play(); //Playback the recorded audio
@@ -100,7 +98,7 @@ void OnGUI()
                 StopListening();
             }
 
-            //GUI.Label(new Rect(Screen.width / 4 - 100, Screen.height / 4 + 25, 200, 50), "Recording in progress...");
+            GUI.Label(new Rect(Screen.width / 4 - 100, Screen.height / 4 + 25, 200, 50), "Recording in progress...");
         }
     }
     else // No microphone
@@ -157,7 +155,7 @@ public void StopListening()
                 audioSource = null;
             }
         }
-        const string BEARER_TOKEN = "ya29.c.KqQB8wdBAAPlRvTqA4kee_kVPizjf7L1P_FIP6nA-0YxMI12a898fbkepewfeexhuuEdUoABo4tCSYUNSmc0RwfMkFAMXRskGTbIBdAEzNXDOR1ZgkAUUnBiQ-rORvkaHtXQPQIkYHPEky9moAexD0CJxRfZN4xC2sX2nCDLhVLZUDJK6bEQl-W2eOc-W__l8hrlvQT6puNwSg0iHHaHCInAyDVdWmo";
+        const string BEARER_TOKEN = "ya29.c.Kp0B8weYzsyvIRfZqtXz-w9lsNAWTlUyBQwFhAxgd_9V_KC-CgO-rjJ5P1LnExg3xVXL1SHwS-qsAUI0yNtBA-kI556fC72GpAr3jO6rGohjUB4BWURZkSqz6Ma4mOXD1chnCeH7h_Exw6ToA8uiirJl5aP6mKfQ_YNM9P1VedMzIUx4P95zOj2wC9g3IjJVxhgd2hyd6AY3aGSNE_Y-Mw";
             //new Thread(StartVoiceRequest).Start(samples);
             StartCoroutine(StartVoiceRequest("https://dialogflow.googleapis.com/v2/projects/vinay-ovis/agent/sessions/34563:detectIntent",
                 BEARER_TOKEN,
@@ -228,21 +226,18 @@ private void StopRecording()
 }
 
 private void convertOutputAudio(string base64)
-{
-    byte[] audioBytes = System.Convert.FromBase64String(base64);
-    System.IO.File.WriteAllBytes("Assets/Resources/decoded.wav", audioBytes);
+    {
+        byte[] audioBytes = System.Convert.FromBase64String(base64);
+        System.IO.File.WriteAllBytes("Assets/Resources/decoded.wav", audioBytes);
 
-    AssetDatabase.Refresh();
+        AssetDatabase.Refresh();
 
-    audioSource = this.GetComponent<AudioSource>();
-    doctor.GetComponent<Animator>().CrossFadeInFixedTime("Talking", 1.25f);
-    audioSource.PlayOneShot((AudioClip)Resources.Load("decoded"));
-    
+        audioSource = this.GetComponent<AudioSource>();
+        
+        audioSource.PlayOneShot((AudioClip)Resources.Load("decoded"));
+  
+    }
 
-}
-private IEnumerator wait(float seconds){
-    yield return new WaitForSeconds(seconds);
-}
 private void StartVoiceRequest(object parameter)
 {
     float[] samples = (float[])parameter;

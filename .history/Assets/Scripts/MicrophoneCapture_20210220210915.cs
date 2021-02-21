@@ -157,7 +157,7 @@ public void StopListening()
                 audioSource = null;
             }
         }
-        const string BEARER_TOKEN = "ya29.c.KqQB8wdBAAPlRvTqA4kee_kVPizjf7L1P_FIP6nA-0YxMI12a898fbkepewfeexhuuEdUoABo4tCSYUNSmc0RwfMkFAMXRskGTbIBdAEzNXDOR1ZgkAUUnBiQ-rORvkaHtXQPQIkYHPEky9moAexD0CJxRfZN4xC2sX2nCDLhVLZUDJK6bEQl-W2eOc-W__l8hrlvQT6puNwSg0iHHaHCInAyDVdWmo";
+        const string BEARER_TOKEN = "ya29.c.Kp0B8weYzsyvIRfZqtXz-w9lsNAWTlUyBQwFhAxgd_9V_KC-CgO-rjJ5P1LnExg3xVXL1SHwS-qsAUI0yNtBA-kI556fC72GpAr3jO6rGohjUB4BWURZkSqz6Ma4mOXD1chnCeH7h_Exw6ToA8uiirJl5aP6mKfQ_YNM9P1VedMzIUx4P95zOj2wC9g3IjJVxhgd2hyd6AY3aGSNE_Y-Mw";
             //new Thread(StartVoiceRequest).Start(samples);
             StartCoroutine(StartVoiceRequest("https://dialogflow.googleapis.com/v2/projects/vinay-ovis/agent/sessions/34563:detectIntent",
                 BEARER_TOKEN,
@@ -235,9 +235,10 @@ private void convertOutputAudio(string base64)
     AssetDatabase.Refresh();
 
     audioSource = this.GetComponent<AudioSource>();
-    doctor.GetComponent<Animator>().CrossFadeInFixedTime("Talking", 1.25f);
+    doctor.GetComponent<Animator>().Play("Talking");
     audioSource.PlayOneShot((AudioClip)Resources.Load("decoded"));
-    
+    wait(3.0f);
+    doctor.GetComponent<Animator>().Play("Standing Idle");
 
 }
 private IEnumerator wait(float seconds){

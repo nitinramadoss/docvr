@@ -157,7 +157,7 @@ public void StopListening()
                 audioSource = null;
             }
         }
-        const string BEARER_TOKEN = "ya29.c.KqQB8wdBAAPlRvTqA4kee_kVPizjf7L1P_FIP6nA-0YxMI12a898fbkepewfeexhuuEdUoABo4tCSYUNSmc0RwfMkFAMXRskGTbIBdAEzNXDOR1ZgkAUUnBiQ-rORvkaHtXQPQIkYHPEky9moAexD0CJxRfZN4xC2sX2nCDLhVLZUDJK6bEQl-W2eOc-W__l8hrlvQT6puNwSg0iHHaHCInAyDVdWmo";
+        const string BEARER_TOKEN = "ya29.c.Kp0B8wcdehGnkdTG2jJX28zzPrrodAqxa6U4dEgZRQMcskXEwqixFEqOo6UOFbYm7UUt4_JjAGkp1rPwiE_CNEl6GIC9QNngmFVZaIp09FpyAbQAGhHARV5OpK481SkjpaIUvjNta-krDxy4W7q-T3xT_XouujExG8o6fyv8CdTSkdYcuO-d4_h9-AZeOxm6-igY-ufSpshxsQiv_P1hxw";
             //new Thread(StartVoiceRequest).Start(samples);
             StartCoroutine(StartVoiceRequest("https://dialogflow.googleapis.com/v2/projects/vinay-ovis/agent/sessions/34563:detectIntent",
                 BEARER_TOKEN,
